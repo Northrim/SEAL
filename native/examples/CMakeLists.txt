@@ -37,4 +37,20 @@ if(SEAL_BUILD_EXAMPLES)
     else()
         message(FATAL_ERROR "Cannot find target SEAL::seal or SEAL::seal_shared")
     endif()
+
+
+    add_executable(sealinterpreter)
+
+    target_sources(sealinterpreter
+        PRIVATE
+            ${CMAKE_CURRENT_LIST_DIR}/seal_interpreter.cpp
+    )
+    if(TARGET SEAL::seal)
+        target_link_libraries(sealinterpreter PRIVATE SEAL::seal)
+    elseif(TARGET SEAL::seal_shared)
+        target_link_libraries(sealinterpreter PRIVATE SEAL::seal_shared)
+    else()
+        message(FATAL_ERROR "Cannot find target SEAL::seal or SEAL::seal_shared")
+    endif()
+
 endif()
